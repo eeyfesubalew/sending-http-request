@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Spinner from "./components/spinner";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
 
@@ -47,7 +47,7 @@ function App() {
     content = <p>{error}</p>;
   }
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = <Spinner />;
   }
   return (
     <React.Fragment>
