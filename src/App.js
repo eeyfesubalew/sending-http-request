@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Spinner from "./components/spinner";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -7,7 +7,8 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  async function fetchMovieHandler() {
+
+  const fetchMovieHandler = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch(`https://swapi.dev/api/films`);
@@ -29,15 +30,11 @@ function App() {
       setError(error.message);
     }
     setIsLoading(false);
-  }
-  // useEffect(() => {
-  //   const getData = async function () {
-  //     const res = await fetch(`https://swapi.dev/api/films`);
-  //     const data = await res.json();
-  //     console.log(data);
-  //   };
-  //   getData();
-  // }, []);
+  }, []);
+
+  useEffect(() => {
+    fetchMovieHandler();
+  }, [fetchMovieHandler]);
 
   let content = <p>Found no movie</p>;
   if (movies.length > 0) {
